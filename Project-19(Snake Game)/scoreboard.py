@@ -1,4 +1,5 @@
 from turtle import Turtle
+
 ALIGNMENT = "center"
 FONT = ("courier", 20, "normal")
 
@@ -6,7 +7,9 @@ class Scoreboard(Turtle):
 
     def __init__(self):
         self.your_score = 0
-        self.high_score = 0
+        #Read high score from data.txt
+        with open("data.txt") as data:
+            self.high_score = int(data.read())
         super().__init__()
         self.hideturtle()
         self.penup()
@@ -22,6 +25,9 @@ class Scoreboard(Turtle):
     def reset(self):
         if self.your_score > self.high_score:
             self.high_score = self.your_score
+            #Store high score into data.txt
+            with open("data.txt", mode = "w") as data:
+                data.write(str(self.high_score))
         self.your_score = 0
         self.refresh_score()
 
